@@ -101,7 +101,7 @@ pdfshow
         },
         letLook(){
              this.window = true
-            let type =this.fileslist.fileName.split('.')[1]
+            let type =this.fileslist.path.split('.')[1]
             if(type=='png'||type=='jpg'){
               return this.showindex = 1
            
@@ -136,7 +136,7 @@ pdfshow
             localStorage.setItem('fileslist',JSON.stringify(this.list[i]))
         },
         filetype(v){
-           let type = v.fileName.split('.')[1]
+           let type = v.path.split('.')[1]
            if(type=='png'||type=='jpg'){
               return this.index = 1
            

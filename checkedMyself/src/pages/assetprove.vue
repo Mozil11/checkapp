@@ -3,7 +3,7 @@
         <div class="head"><back/>资产凭证</div>
         <div>
             <proveNumber :receivableId='receivableId'/>
-            <div class="todo">
+            <div class="todo" v-if="todoshow">
                 <div>
                     <span>上传凭证类型：</span>
                     <el-select v-model="value" placeholder="请选择" class="sel">
@@ -26,6 +26,37 @@
                     </div>
                 </div>
             </div>
+            <div v-else>
+                <div class="main1">
+           <div class="box">
+               <img :src="images" alt="">
+           </div>
+           <div class="provetype">
+上传凭证类型：运输单
+           </div>
+           <div class="adi">编辑凭证材料基本信息</div>
+           <el-row class="provename">
+               <el-col :span="6" class="name1">
+                <span>凭证名称</span>
+               </el-col>
+               <el-col :span="18">
+                <el-input v-model="filename" placeholder="请输入名称" class="inname"></el-input>
+               </el-col>
+           </el-row>
+           <el-row class="provename">
+               <el-col :span="6" class="name1">
+                <span>凭证描述</span>
+               </el-col>
+               <el-col :span="18">
+                <el-input v-model="marks" placeholder="请输入描述" class="inname"></el-input>
+               </el-col>
+           </el-row>
+       </div>
+       <div class="footer">
+           <button class="pic" @click="goback">重新拍摄识别</button>
+           <button class="up" @click="gotosuccess">上传</button>
+       </div>
+            </div>
         </div>
     </div>
 </template>
@@ -33,6 +64,7 @@
 import proveNumber from '../components/proveNumber';
 import back from '../components/back'
 import {unOcrUpdate} from '../router/http.js'
+
 export default {
     components:{
 proveNumber,back
@@ -54,15 +86,34 @@ proveNumber,back
         }],
         value: '',
          receivableId: localStorage.getItem('receivableId'),
+         files:{'a':'a'},
+         todoshow:true,
+         images:'',
+         filename:'',
+         marks:''
         }
     },
     methods:{
+        goback(){
+            this.todoshow = true;
+        },
+        gotosuccess(){
+            unOcrUpdate(this.files).then(res=>{
+                console.log(res)
+                this.$router.push({
+                    path:'/addsuccess'
+                })
+            }).catch(err=>{
+                console.log(err)
+            })
+        },
         onPlusReady() {
             console.log("plusready");
             
         },
         //拍照
         takephoto(){
+             this.todoshow = false
              var cmr = plus.camera.getCamera();
         
             var reader = null;
@@ -73,6 +124,7 @@ proveNumber,back
             cmr.captureImage( ( path )=>{
                     // alert( "Capture image success: " + path ); 
                     plus.io.resolveLocalFileSystemURL(path,(entry)=>{
+                        this.images = entry.toLocalURL()
                         entry.file((file)=>{
                             reader = new plus.io.FileReader();
                             reader.onloadend = (e)=>{
@@ -86,14 +138,9 @@ proveNumber,back
                                     var blob = this.dataURLtoBlob(e.target.result);
                                     //BLOB对象转换为FILE对象 
                                     newfile=new File([blob],file.name);
-                                    // console.log( newfile );
-                                    // this.file = newfile
-                                   
-                                    unOcrUpdate(newfile).then(res=>{
-                                        console.log(res)
-                                    }).catch(err=>{
-                                        console.log(err)
-                                    })
+                                    this.filename = file.name.split('.')[0]
+                                    this.files = newfile
+                                    this.todoshow = false
                             }
                             reader.readAsDataURL( file );
                         })
@@ -117,11 +164,16 @@ proveNumber,back
         },
         //相册
         galleryImg(){
+             var reader = null;
+            var newfile =null
             // 从相册中选择图片
             console.log("从相册中选择图片:");
             plus.gallery.pick(path=>{
                 console.log(path);
+
                 plus.io.resolveLocalFileSystemURL(path,(entry)=>{
+                        this.images = entry.toLocalURL()
+
                         entry.file((file)=>{
                             reader = new plus.io.FileReader();
                             reader.onloadend = (e)=>{
@@ -135,14 +187,13 @@ proveNumber,back
                                     var blob = this.dataURLtoBlob(e.target.result);
                                     //BLOB对象转换为FILE对象 
                                     newfile=new File([blob],file.name);
+                                    this.filename = file.name.split('.')[0]
                                     // console.log( newfile );
-                                    // this.file = newfile
+                                    this.files = newfile
+                                    this.todoshow = false
+
                                    
-                                    unOcrUpdate(newfile).then(res=>{
-                                        console.log(res)
-                                    }).catch(err=>{
-                                        console.log(err)
-                                    })
+                                   
                             }
                             reader.readAsDataURL( file );
                         })
@@ -191,5 +242,60 @@ proveNumber,back
 }
 .sel{
     width: 45%;
+}
+.main1{
+    margin:20px 8px 20px 8px;
+    position: relative;
+  font-size: 14px;
+    padding: 20px;
+    border:1px solid #e0dfdf;
+    border-radius: 5px;
+    box-shadow: 0px 0px 2px #a1a0a0;
+}
+.box{
+    margin-top: 20px;
+}
+.provetype{
+    margin-top: 10px;
+}
+.adi{
+    margin-top: 20px;
+    text-align: left;
+}
+.inname{
+    /* width: 50%; */
+    /* margin-left: 10px; */
+}
+.provename{
+    text-align: left;
+    margin-top: 10px;
+}
+.name1{
+   margin-top: 10px;
+}
+.pic{
+    background: #fff;
+    border: 1px solid #409EFF;
+    color: #409EFF;
+    padding: 10px;
+    border-radius: 5px;
+    width: 130px;
+}
+.pic:active{
+    background: rgb(183, 216, 250);
+}
+.up{
+    background: #409EFF;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    width: 130px;
+}
+.up:active{
+    background: rgb(44, 142, 240);
+}
+.footer{
+    margin-top: 40px;
 }
 </style>

@@ -15,7 +15,6 @@ import assetprove from '@/pages/assetprove'
 import bioAssay from '@/pages/bio-assay'
 import scan from '@/pages/scan'
 import lookprove from '@/pages/lookprove'
-import addprove from '@/pages/addprove'
 import addsuccess from '@/pages/addproveSuccess'
 import afterupdateprove from '@/pages/afterupdateprove'
 Vue.use(Router)
@@ -97,11 +96,7 @@ export default new Router({
       name: 'lookprove',
       component: lookprove
     },
-    {
-      path: '/addprove',
-      name: 'addprove',
-      component: addprove
-    },
+    
     {
       path: '/addsuccess',
       name: 'addsuccess',
