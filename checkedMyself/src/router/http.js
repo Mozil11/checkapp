@@ -63,6 +63,14 @@ function updataMaterial(fileslist){
     return axios.post('/allReceivableInformation/updataMaterial',data,{headers:{'Authorization':token}})
 
 }
+//凭证材料非ocr上传
+function unOcrUpdate(file){
+    var token = localStorage.getItem('token')
+    var data = new FormData();
+    data.append('file',file)
+    data.append('start','3')
+    return axios.post('/common/sysFile/uploadFile',data,{headers:{'Authorization':token}})
+}
 //人脸比对-百度
 
 function faceCheck(data){
@@ -99,5 +107,6 @@ export {
     logout,
     makesureQrlogin,
     inquireReceivableByReceivableId,
-    updataMaterial
+    updataMaterial,
+    unOcrUpdate
 }
