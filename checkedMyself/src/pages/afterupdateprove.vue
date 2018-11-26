@@ -38,8 +38,9 @@ back
     data(){
         return{
             data:JSON.parse(localStorage.getItem('invoice')),
-            file:JSON.parse(localStorage.getItem('img')),
+            file:'',
             receivableId: localStorage.getItem('receivableId'),
+            imgname:localStorage.getItem('imgname')
         }
 },
     methods:{
@@ -47,7 +48,7 @@ back
             this.$router.go(-1)
         },
          gotosuccess(){
-             uploadRecognition(this.file.img,this.receivableId).then(res=>{
+             uploadRecognition(this.file,this.receivableId).then(res=>{
                  console.log(res)
                  localStorage.clear('img')
                    localStorage.setItem('updatafile',JSON.stringify(res))
@@ -59,6 +60,12 @@ back
              })
             
         }
+    },
+    mounted(){
+        
+         var blob = this.dataURLtoBlob(localStorage.getItem('img'));
+        //BLOB对象转换为FILE对象 
+        this.file=new File([blob],this.imgname);
     }
 }
 </script>
