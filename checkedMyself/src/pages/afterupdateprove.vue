@@ -49,6 +49,7 @@ back
          gotosuccess(){
              uploadRecognition(this.file.img,this.receivableId).then(res=>{
                  console.log(res)
+                 localStorage.clear('img')
                    localStorage.setItem('updatafile',JSON.stringify(res))
                     this.$router.push({
                         path:'/addsuccess'

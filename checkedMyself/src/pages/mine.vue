@@ -74,8 +74,7 @@ export default {
         logout(){
             logout().then(res=>{
                 console.log(res)
-                localStorage.clear('data');
-                localStorage.clear('token')
+                 localStorage.clear();
                 this.$router.push({path: '/'
                 });
             }).catch(err=>{
