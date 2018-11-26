@@ -11,33 +11,52 @@
             <div>凭证描述: <span>XX描述XXX</span> </div>
         </div>
         <div class="main">
-            <div><span class="a">发票代码</span><span class="o">012001800111</span></div>
-            <div><span class="a">发票号码</span><span class="o">39810656</span></div>
-            <div><span class="a">开票日期</span><span class="o">2018年08月23日</span></div>
-            <div><span class="a">校验码</span><span class="o">006035050058102724</span></div>
-            <div><span class="a">名称</span><span class="o">北京微分格科技有限公司</span></div>
-            <div><span class="a">纳税人识别号</span><span class="o">91110102MA01DCJ536</span></div>
-            <div><span class="a">地址/电话</span><span class="o">北京市西城区阜成门外大街2号12层</span></div>
-            <div><span class="a">开户行及账号</span><span class="o">110934388010102</span></div>
+            <div><span class="a">发票代码</span><span class="o">{{data.data.vat_invoice_daima}}</span></div>
+            <div><span class="a">发票号码</span><span class="o">{{data.data.vat_invoice_haoma}}</span></div>
+            <div><span class="a">开票日期</span><span class="o">{{data.data.vat_invoice_issue_date}}</span></div>
+            <div><span class="a">校验码</span><span class="o">{{data.data.vat_invoice_correct_code}}</span></div>
+            <div><span class="a">名称</span><span class="o">{{data.data.vat_invoice_payer_name}}</span></div>
+            <div><span class="a">纳税人识别号</span><span class="o">{{data.data.vat_invoice_rate_payer_id}}</span></div>
+            <div><span class="a">地址/电话</span><span class="o">{{data.data.vat_invoice_payer_addr_tell}}</span></div>
+            <div><span class="a">开户行及账号</span><span class="o">{{data.data.vat_invoice_payer_bank_account}}</span></div>
 
         </div>
         <div class="footer">
-           <button class="pic">重新拍摄识别</button>
+           <button class="pic" @click="goback">重新拍摄识别</button>
            <button class="up" @click="gotosuccess">上传</button>
        </div>
     </div>
 </template>
 <script>
 import back from '../components/back'
+import {uploadRecognition} from '../router/http.js'
+
 export default {
     components:{
 back
     },
+    data(){
+        return{
+            data:JSON.parse(localStorage.getItem('invoice')),
+            file:JSON.parse(localStorage.getItem('img')),
+            receivableId: localStorage.getItem('receivableId'),
+        }
+},
     methods:{
+        goback(){
+            this.$router.go(-1)
+        },
          gotosuccess(){
-            this.$router.push({
-                path:'/addsuccess'
-            })
+             uploadRecognition(this.file.img,this.receivableId).then(res=>{
+                 console.log(res)
+                   localStorage.setItem('updatafile',JSON.stringify(res))
+                    this.$router.push({
+                        path:'/addsuccess'
+                    })
+             }).catch(err=>{
+                  console.log(err)
+             })
+            
         }
     }
 }

@@ -64,18 +64,43 @@ function updataMaterial(fileslist){
 
 }
 //凭证材料非ocr上传
-function unOcrUpdate(file){
+function unOcrUpdate(file,start,sign,receivableId,fileName,remarks){
     var token = localStorage.getItem('token')
     var data = new FormData();
     data.append('file',file)
-    data.append('start','3')
-    return axios.post('/common/sysFile/uploadFile',data,{headers:{'Authorization':token}})
+    data.append('start',start)
+    data.append('sign',sign)
+    data.append('receivableId',receivableId)
+    data.append('fileName',fileName)
+    data.append('remarks',remarks)
+    return axios.post('/AppFileUpload/fileUpload',data,{headers:{'Authorization':token}})
+}
+//ocr上传
+function uploadRecognition (file,receivableId){
+    var token = localStorage.getItem('token')
+    var data = new FormData();
+    data.append('file',file)
+    data.append('start',0)
+    data.append('sign',1)
+    data.append('receivableId',receivableId)
+    return axios.post('/allReceivableInformation/uploadRecognition',data,{headers:{'Authorization':token}})
+
+
 }
 //人脸比对-百度
 
 function faceCheck(data){
     var token = localStorage.getItem('token')
     return axios.post('/app/baiduAIFaceMatch',data,{headers:{'Authorization':token}})
+}
+//增值税发票识别
+function xfOcrInvoice(image){
+    
+    var token = localStorage.getItem('token')
+    var data = new FormData();
+    data.append('image',image)
+    return axios.post('/app/xfOcrInvoice',data,{headers:{'Authorization':token}})
+
 }
 //选择一个角色
 function chooseRole(roleId){
@@ -108,5 +133,7 @@ export {
     makesureQrlogin,
     inquireReceivableByReceivableId,
     updataMaterial,
-    unOcrUpdate
+    unOcrUpdate,
+    xfOcrInvoice,
+    uploadRecognition
 }

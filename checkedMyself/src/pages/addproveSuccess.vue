@@ -8,13 +8,13 @@
         </div>
         <div class="suc">凭证材料-上传成功</div>
         <div class="imgprove">
-            <img src="../assets/u19685.png" alt="">
+            <img :src="data.certificateFile.path" alt="">
         </div>
         <div class="text">
-            <div class="one"><span>关联主体编号：</span><span>应收账款，YSZK015</span></div>
-            <div class="one"><span>类凭证型：</span><span>运输单</span></div>
-            <div class="one"><span>凭证名称：</span><span>项目一期运输单</span></div>
-            <div class="one"><span>凭证描述：</span><span>9月5日  一期货物运输，证明人--孙大明</span></div>
+            <div class="one"><span>关联主体编号：</span><span>应收账款，{{data.certificateFile.certificateId}}</span></div>
+            <!-- <div class="one"><span>类凭证型：</span><span>运输单</span></div> -->
+            <div class="one"><span>凭证名称：</span><span>{{data.certificateFile.fileName}}</span></div>
+            <div class="one"><span>凭证描述：</span><span>{{data.certificateFile.remarks}}</span></div>
 
         </div>
     </div>
@@ -26,6 +26,11 @@ export default {
     components:{
         back
     },
+    data(){
+        return{
+            data:JSON.parse(localStorage.getItem('updatafile')) 
+        }
+    }
 }
 </script>
 <style scoped>

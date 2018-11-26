@@ -22,16 +22,16 @@ Vue.use(Upload)
 Vue.use(Dialog)
 
 //使用钩子函数对路由进行权限跳转
-// router.beforeEach((to, from, next) => {
-//   console.log(to);
-//   const role = localStorage.getItem('data');
+router.beforeEach((to, from, next) => {
+  console.log(to);
+  const role = localStorage.getItem('data');
 
-//   if(!role && to.path !== '/'){
-//       next('/');
-//   }else{
-//           next();
-//   }
-// })
+  if(!role && to.path !== '/'){
+      next('/');
+  }else{
+          next();
+  }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -63,7 +63,7 @@
 <script>
 import proveNumber from '../components/proveNumber';
 import back from '../components/back'
-import {unOcrUpdate} from '../router/http.js'
+import {unOcrUpdate,xfOcrInvoice} from '../router/http.js'
 
 export default {
     components:{
@@ -72,25 +72,27 @@ proveNumber,back
     data(){
         return{
             options: [{
-          value: '选项1',
+          value: 0,
           label: '发票'
         }, {
-          value: '选项2',
+          value: 1,
           label: '贸易合同'
         }, {
-          value: '选项3',
+          value: 2,
           label: '发货单'
         }, {
-          value: '选项4',
+          value: 3,
           label: '其他'
         }],
         value: '',
          receivableId: localStorage.getItem('receivableId'),
          files:{'a':'a'},
-         todoshow:true,
+         todoshow:false,
          images:'',
          filename:'',
-         marks:''
+         marks:'',
+         sign2:1,
+         sign3:1
         }
     },
     methods:{
@@ -98,14 +100,42 @@ proveNumber,back
             this.todoshow = true;
         },
         gotosuccess(){
-            unOcrUpdate(this.files).then(res=>{
-                console.log(res)
-                this.$router.push({
-                    path:'/addsuccess'
+            if(this.value==2){
+
+                unOcrUpdate(this.files,this.value,this.sign2,this.receivableId,this.filename,this.marks).then(res=>{
+                    console.log(res)
+                    localStorage.setItem('updatafile',JSON.stringify(res))
+                    this.$router.push({
+                        path:'/addsuccess'
+                    })
+                }).catch(err=>{
+                    console.log(err)
                 })
-            }).catch(err=>{
-                console.log(err)
-            })
+                this.sign2++
+            }else if(this.value==3){
+                unOcrUpdate(this.files,this.value,this.sign3,this.receivableId,this.filename,this.marks).then(res=>{
+                    console.log(res)
+                                        localStorage.setItem('updatafile',JSON.stringify(res))
+
+                    this.$router.push({
+                        path:'/addsuccess'
+                    })
+                }).catch(err=>{
+                    console.log(err)
+                })
+                this.sign3++
+            }else{
+                unOcrUpdate(this.files,this.value,1,this.receivableId,this.filename,this.marks).then(res=>{
+                    console.log(res)
+                                        localStorage.setItem('updatafile',JSON.stringify(res))
+
+                    this.$router.push({
+                        path:'/addsuccess'
+                    })
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
         },
         onPlusReady() {
             console.log("plusready");
@@ -135,12 +165,33 @@ proveNumber,back
                                 //   data.append('quality_control','LOW')
                                 //   data.append('liveness_control','HIGH')
                                 //读取文件内容 dataurl 转化为BLOB对象
+                                        var wt = plus.nativeUI.showWaiting();
+
                                     var blob = this.dataURLtoBlob(e.target.result);
                                     //BLOB对象转换为FILE对象 
                                     newfile=new File([blob],file.name);
                                     this.filename = file.name.split('.')[0]
                                     this.files = newfile
-                                    this.todoshow = false
+                                    var data = {'img':newfile}
+                                    localStorage.setItem('img',JSON.stringify(data))
+                                    xfOcrInvoice(this.files).then(res=>{
+                                        console.log(res)
+                                        if(res.code==200){
+                                            wt.close()
+                                            if(res.data.code==0){
+                                                localStorage.setItem('invoice',JSON.stringify(res.data))
+                                                this.$router.push({
+                                                    path:'/afterupdateprove'
+                                                })
+                                            }else{
+                                                 this.todoshow = false
+                                            }
+                                            
+                                        }
+                                    }).catch(err=>{
+                                        console.log(err)
+                                    })
+                                   
                             }
                             reader.readAsDataURL( file );
                         })
@@ -183,6 +234,7 @@ proveNumber,back
                                 //   data.append('face_type','LIVE')
                                 //   data.append('quality_control','LOW')
                                 //   data.append('liveness_control','HIGH')
+                                  var wt = plus.nativeUI.showWaiting();
                                 //读取文件内容 dataurl 转化为BLOB对象
                                     var blob = this.dataURLtoBlob(e.target.result);
                                     //BLOB对象转换为FILE对象 
@@ -190,7 +242,25 @@ proveNumber,back
                                     this.filename = file.name.split('.')[0]
                                     // console.log( newfile );
                                     this.files = newfile
-                                    this.todoshow = false
+                                      var data = {'img':newfile}
+                                    localStorage.setItem('img',JSON.stringify(data))
+                                    xfOcrInvoice(this.files).then(res=>{
+                                        console.log(res)
+                                         if(res.code==200){
+                                             wt.close()
+                                            if(res.data.code==0){
+                                                localStorage.setItem('invoice',JSON.stringify(res.data))
+                                                this.$router.push({
+                                                    path:'/afterupdateprove'
+                                                })
+                                            }else{
+                                                 this.todoshow = false
+                                            }
+                                            
+                                        }
+                                    }).catch(err=>{
+                                        console.log(err)
+                                    })
 
                                    
                                    
