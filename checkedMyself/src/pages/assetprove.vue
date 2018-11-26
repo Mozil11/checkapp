@@ -332,10 +332,7 @@ proveNumber,back
     margin-top: 20px;
     text-align: left;
 }
-.inname{
-    /* width: 50%; */
-    /* margin-left: 10px; */
-}
+
 .provename{
     text-align: left;
     margin-top: 10px;
