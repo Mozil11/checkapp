@@ -5,8 +5,8 @@
              区块链账号
         </div>
         <div class="main">
-            <div class="linkuser">区块链账号:<span>1C5vSQyGDefKW1J9B</span>   </div>
-            <div class="linkpaw"><div>区块链密码:</div><span>550ba3ab0c54c24f8eeb90276e58cc6f0dc57747c1960b5522ed413d</span></div>
+            <div class="linkuser">区块链账号:<span>{{data.username}}</span>   </div>
+            <div class="linkpaw"><div>区块链密码:</div><span>{{data.password}}</span></div>
             <div>
                  <el-button type="primary" class="over" @click="gotonomarl">完成</el-button>
             </div>
@@ -23,6 +23,11 @@ import back from '../components/back'
 export default {
     components:{
         back
+    },
+    data(){
+        return{
+            data:JSON.parse(localStorage.getItem('link')) 
+        }
     },
     methods:{
         gotonomarl(){

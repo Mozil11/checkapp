@@ -27,9 +27,9 @@
                 <div class="massage">
                     <img src="static/close.svg" alt="" class="close" @click="closeMsg">
                     <div class="usernumber">区块链账号</div>
-                    <div>1C5vSQyGDefrUzWP5KW1J9BC</div>
+                    <div>{{link.username}}</div>
                     <div class="userpaw">区块链密码 </div>
-                    <div>550ba3ab0c54c24f8eeb90276e58cc6f0dc57747c1960b5522ed413d</div>
+                    <div>{{link.password}}</div>
                     <div class="shuoming">说明：请妥善保管账号信息，切勿泄露</div>
                 </div>
             </div>
@@ -60,7 +60,8 @@ export default {
         return{
             show:false,
             islogout:false,
-            data:{}
+            data:{},
+            link:JSON.parse(localStorage.getItem('link'))
         }
     },
     methods:{

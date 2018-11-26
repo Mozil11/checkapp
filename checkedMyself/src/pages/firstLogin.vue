@@ -33,6 +33,7 @@ export default {
         setlink(){
             createLinkUser().then(res=>{
                 console.log(res)
+                localStorage.setItem('link',res.data.data)
                 this.$router.push({
                     path: '/setlink'
                 })
