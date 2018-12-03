@@ -29,7 +29,7 @@
             <div v-else>
                 <div class="main1">
            <div class="box">
-               <img :src="images" alt="">
+               <img :src="images" alt="" style="width: 100%;">
            </div>
            <div class="provetype">
 上传凭证类型：运输单
@@ -87,7 +87,7 @@ proveNumber,back
         value: '',
          receivableId: localStorage.getItem('receivableId'),
          files:{'a':'a'},
-         todoshow:false,
+         todoshow:true,
          images:'',
          filename:'',
          marks:'',
@@ -143,12 +143,12 @@ proveNumber,back
         },
         //拍照
         takephoto(){
-             this.todoshow = false
+            //  this.todoshow = false
              var cmr = plus.camera.getCamera();
         
             var reader = null;
             var newfile =null
-            var res = cmr.supportedImageResolutions[0];
+            var res = cmr.supportedImageResolutions[2];
             var fmt = cmr.supportedImageFormats[0];
             console.log("Resolution: "+res+", Format: "+fmt);
             cmr.captureImage( ( path )=>{
@@ -170,10 +170,10 @@ proveNumber,back
                                     var blob = this.dataURLtoBlob(e.target.result);
                                     //BLOB对象转换为FILE对象 
                                     newfile=new File([blob],file.name);
+                                    localStorage.setItem('img',e.target.result)
+                                    localStorage.setItem('imgname',file.name)
                                     this.filename = file.name.split('.')[0]
                                     this.files = newfile
-                                    var data = {'img':newfile}
-                                    localStorage.setItem('img',JSON.stringify(data))
                                     xfOcrInvoice(this.files).then(res=>{
                                         console.log(res)
                                         if(res.code==200){
@@ -240,10 +240,10 @@ proveNumber,back
                                     //BLOB对象转换为FILE对象 
                                     newfile=new File([blob],file.name);
                                     this.filename = file.name.split('.')[0]
+                                    localStorage.setItem('imgname',file.name)
+                                    localStorage.setItem('img',e.target.result)
                                     // console.log( newfile );
                                     this.files = newfile
-                                      var data = {'img':newfile}
-                                    localStorage.setItem('img',JSON.stringify(data))
                                     xfOcrInvoice(this.files).then(res=>{
                                         console.log(res)
                                          if(res.code==200){
@@ -332,10 +332,7 @@ proveNumber,back
     margin-top: 20px;
     text-align: left;
 }
-.inname{
-    /* width: 50%; */
-    /* margin-left: 10px; */
-}
+
 .provename{
     text-align: left;
     margin-top: 10px;
