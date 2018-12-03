@@ -67,6 +67,11 @@ export default {
             }
             result = result.replace(/\r\n/g, '');
            console.log(result)
+           if(result == 'your content'){
+                this.$router.push({
+                    path:'/assetprove'
+                })
+           }
            var qrdata = eval('(' + result + ')'); 
            console.log(qrdata)
            localStorage.setItem('platform',qrdata.platform)
