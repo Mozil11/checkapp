@@ -17,6 +17,11 @@ import scan from '@/pages/scan'
 import lookprove from '@/pages/lookprove'
 import addsuccess from '@/pages/addproveSuccess'
 import afterupdateprove from '@/pages/afterupdateprove'
+import companyprove from '@/pages/companyprove'
+import companyadd from '@/pages/companyadd'
+import companySuccess from '@/pages/companySuccess'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -106,6 +111,21 @@ export default new Router({
       path: '/afterupdateprove',
       name: 'afterupdateprove',
       component: afterupdateprove
+    },
+    {
+      path: '/companyprove',
+      name: 'companyprove',
+      component: companyprove
+    },
+    {
+      path: '/companyadd',
+      name: 'companyadd',
+      component: companyadd
+    },
+    {
+      path: '/companySuccess',
+      name: 'companySuccess',
+      component: companySuccess
     },
   ]
 })

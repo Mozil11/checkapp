@@ -1,19 +1,12 @@
 <template>
     <div class='outside'>
-        <div class="head"><back/>资产凭证</div>
+        <div class="head"><back/>企业凭证</div>
         <div>
-            <proveNumber :receivableId='receivableId'/>
+            <companyInfo />
             <div class="todo" v-if="todoshow">
                 <div>
                     <span>上传凭证类型：</span>
-                    <el-select v-model="value" placeholder="请选择" class="sel">
-                        <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <span>{{runprove}}</span>
                 </div>
                 <div>
                     <div>
@@ -32,25 +25,10 @@
                <img :src="images" alt="" style="width: 100%;">
            </div>
            <div class="provetype">
-上传凭证类型：运输单
+                上传凭证类型：{{runprove}}
            </div>
-           <div class="adi">编辑凭证材料基本信息</div>
-           <el-row class="provename">
-               <el-col :span="6" class="name1">
-                <span>凭证名称</span>
-               </el-col>
-               <el-col :span="18">
-                <el-input v-model="filename" placeholder="请输入名称" class="inname"></el-input>
-               </el-col>
-           </el-row>
-           <el-row class="provename">
-               <el-col :span="6" class="name1">
-                <span>凭证描述</span>
-               </el-col>
-               <el-col :span="18">
-                <el-input v-model="marks" placeholder="请输入描述" class="inname"></el-input>
-               </el-col>
-           </el-row>
+           
+           
        </div>
        <div class="footer">
            <button class="pic" @click="goback">重新拍摄识别</button>
@@ -61,13 +39,13 @@
     </div>
 </template>
 <script>
-import proveNumber from '../components/proveNumber';
+import companyInfo from '../components/companyInfo';
 import back from '../components/back'
 import {unOcrUpdate,xfOcrInvoice} from '../router/http.js'
 
 export default {
     components:{
-proveNumber,back
+companyInfo,back
     },
     data(){
         return{
@@ -175,23 +153,7 @@ proveNumber,back
                                     localStorage.setItem('imgname',file.name)
                                     this.filename = file.name.split('.')[0]
                                     this.files = newfile
-                                    xfOcrInvoice(this.files).then(res=>{
-                                        console.log(res)
-                                        if(res.code==200){
-                                            wt.close()
-                                            if(res.data.code==0){
-                                                localStorage.setItem('invoice',JSON.stringify(res.data))
-                                                this.$router.push({
-                                                    path:'/afterupdateprove'
-                                                })
-                                            }else{
-                                                 this.todoshow = false
-                                            }
-                                            
-                                        }
-                                    }).catch(err=>{
-                                        console.log(err)
-                                    })
+                                     this.todoshow = false
                                    
                             }
                             reader.readAsDataURL( file );
@@ -245,23 +207,7 @@ proveNumber,back
                                     localStorage.setItem('img',e.target.result)
                                     // console.log( newfile );
                                     this.files = newfile
-                                    xfOcrInvoice(this.files).then(res=>{
-                                        console.log(res)
-                                         if(res.code==200){
-                                             wt.close()
-                                            if(res.data.code==0){
-                                                localStorage.setItem('invoice',JSON.stringify(res.data))
-                                                this.$router.push({
-                                                    path:'/afterupdateprove'
-                                                })
-                                            }else{
-                                                 this.todoshow = false
-                                            }
-                                            
-                                        }
-                                    }).catch(err=>{
-                                        console.log(err)
-                                    })
+                                     this.todoshow = false
 
                                    
                                    

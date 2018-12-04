@@ -5,22 +5,18 @@
                 <el-col :span="4" class="first">
                     <img src="../assets/prove.svg" alt="">
                 </el-col>
-                <el-col :span="10">
-                    <div class="guanlian">凭证编号</div>
-                    <div class="num">{{receivableId}}</div>
+                <el-col :span="20">
+                    <div class="guanlian">企业名称：海尔集团公司</div>
+                    <div class="num">企业编号：cm_0001</div>
                 </el-col>
-                <el-col :span="10">
-                    <div class="name">
-                        应收账款
-                    </div>
-                </el-col>
+              
             </el-row>
         </div>
         </div>
 </template>
 <script>
 export default {
-    props:['receivableId'],
+   
     data(){
         return{
         }

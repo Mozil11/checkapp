@@ -56,6 +56,6 @@ ul,li{ padding:0;margin:0;list-style:none}
   padding-left: 30px;
 }
 .outside{
-  margin: 8px;
+      padding: 8px
 }
 </style>

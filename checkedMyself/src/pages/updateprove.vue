@@ -2,7 +2,7 @@
     <div class='outside'>
         <div class="head"><back/>上传凭证</div>
         <div class="main">
-            <span class="companyProve">
+            <span class="companyProve"  @click="gotocompanyprove">
                 <img src="static/company.svg" alt="">
                 <div>企业凭证</div>
             </span>
@@ -37,6 +37,12 @@ export default {
         gotoprove(){
             this.$router.push({
                 path:'/proveIn'
+            })
+        },
+        gotocompanyprove(){
+            this.$router.push({
+                path:'/companyprove',
+               
             })
         }
     }
