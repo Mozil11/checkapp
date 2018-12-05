@@ -20,6 +20,8 @@ import afterupdateprove from '@/pages/afterupdateprove'
 import companyprove from '@/pages/companyprove'
 import companyadd from '@/pages/companyadd'
 import companySuccess from '@/pages/companySuccess'
+import userlist from '@/pages/userlist'
+import userprove from '@/pages/userprove'
 
 
 Vue.use(Router)
@@ -126,6 +128,16 @@ export default new Router({
       path: '/companySuccess',
       name: 'companySuccess',
       component: companySuccess
+    },
+    {
+      path: '/userprove',
+      name: 'userprove',
+      component: userprove
+    },
+    {
+      path: '/userlist',
+      name: 'userlist',
+      component: userlist
     },
   ]
 })

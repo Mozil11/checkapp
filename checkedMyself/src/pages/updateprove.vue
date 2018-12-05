@@ -11,7 +11,7 @@
                 <div>授信凭证</div>
             </span>
             <span class="userprove">
-                <img src="static/user.svg" alt="">
+                <img src="static/user.svg" alt="" @click="gotouserprove">
                 <div>用户凭证</div>
             </span>
             <span class="assetprove" @click="gotoprove">
@@ -42,6 +42,12 @@ export default {
         gotocompanyprove(){
             this.$router.push({
                 path:'/companyprove',
+               
+            })
+        },
+        gotouserprove(){
+            this.$router.push({
+                path:'/userlist',
                
             })
         }

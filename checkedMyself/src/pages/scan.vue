@@ -67,13 +67,20 @@ export default {
             }
             result = result.replace(/\r\n/g, '');
            console.log(result)
-           if(result == 'your content'){
-                this.$router.push({
-                    path:'/assetprove'
-                })
-           }
+        //    if(result == 'your content'){
+        //         this.$router.push({
+        //             path:'/assetprove'
+        //         })
+        //    }
            var qrdata = eval('(' + result + ')'); 
            console.log(qrdata)
+           var myreceivableId = localStorage.getItem('receivableId')
+           if(qrdata.receivableId != myreceivableId){
+            
+
+           }else{
+
+           }
            localStorage.setItem('platform',qrdata.platform)
            localStorage.setItem('qrToken',qrdata.qrToken)
             scanCode(qrdata.qrToken).then(res=>{
