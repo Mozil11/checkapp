@@ -22,7 +22,10 @@ import companyadd from '@/pages/companyadd'
 import companySuccess from '@/pages/companySuccess'
 import userlist from '@/pages/userlist'
 import userprove from '@/pages/userprove'
-
+import userproveadd from '@/pages/userproveadd'
+import userproveSuccess from '@/pages/userproveSuccess'
+import creditExtension from '@/pages/creditExtension'
+import credSuccess from '@/pages/credSuccess'
 
 Vue.use(Router)
 
@@ -138,6 +141,26 @@ export default new Router({
       path: '/userlist',
       name: 'userlist',
       component: userlist
+    },
+    {
+      path: '/userproveadd',
+      name: 'userproveadd',
+      component: userproveadd
+    },
+    {
+      path: '/userproveSuccess',
+      name: 'userproveSuccess',
+      component: userproveSuccess
+    },
+    {
+      path: '/creditExtension',
+      name: 'creditExtension',
+      component: creditExtension
+    },
+    {
+      path: '/credSuccess',
+      name: 'credSuccess',
+      component: credSuccess
     },
   ]
 })

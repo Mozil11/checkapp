@@ -1,5 +1,5 @@
 <template>
-    <div style="margin-bottom:170px;">
+    <div class="outside" style="margin-bottom:170px;">
         <div class="head">
             <back />用户凭证
         </div>
@@ -58,9 +58,9 @@ usernumber:localStorage.getItem('userproveusernumber')
     },
     methods:{
         updataprove(){
-            localStorage.setItem('runprove','营业执照扫描件')
+            localStorage.setItem('userprove','身份证人像面扫描件')
             this.$router.push({
-                path:'/companyadd',
+                path:'/userproveadd',
                 
             })
         }

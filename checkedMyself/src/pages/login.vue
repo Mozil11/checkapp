@@ -179,13 +179,20 @@ export default {
       var flag = JSON.parse(localStorage.getItem('data')).flag
     }
     if(localStorage.getItem('token')){
-      if(flag==true){
-         this.$router.push({path: '/firstlogin'});
-      }
-      if(flag == false){
-        this.$router.push({path: '/nomarlLog'
-                ,query :{index:1,current:0}
-        });
+      if(localStorage.getItem('checkface')){
+        if(flag==true){
+           this.$router.push({path: '/firstlogin'});
+        }
+        if(flag == false){
+          this.$router.push({path: '/nomarlLog'
+                  ,query :{index:1,current:0}
+          });
+        }
+      }else{
+        this.$router.push({
+                path:'/bioAssay',
+                // query:{index:1}
+            })
       }
     }
     

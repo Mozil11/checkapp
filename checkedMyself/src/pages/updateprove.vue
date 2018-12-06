@@ -6,18 +6,26 @@
                 <img src="static/company.svg" alt="">
                 <div>企业凭证</div>
             </span>
-            <span class="creditprove">
-                <img src="static/creditprove.svg" alt="">
+            <span class="creditprove" @click="gotosacn">
+                <img src="static/creditprove.svg" alt="" >
                 <div>授信凭证</div>
             </span>
-            <span class="userprove">
-                <img src="static/user.svg" alt="" @click="gotouserprove">
+            <span class="userprove" @click="gotouserprove">
+                <img src="static/user.svg" alt="" >
                 <div>用户凭证</div>
             </span>
             <span class="assetprove" @click="gotoprove">
                 <img src="static/money.svg" alt="">
                 <div>资产凭证</div>
             </span>
+        </div>
+        <div class="shadow" v-show="shadowshow">
+            <div class="box">
+                
+                <div class="in">请在电脑端申请授信时，选择【从手机上传】按钮，进行扫码上传</div>
+                <div class="san" @click="gotosao">马上扫码上传</div>
+                <div class="cancel" @click="cancel">取  消</div>
+            </div>
         </div>
     </div>
 </template>
@@ -30,7 +38,7 @@ export default {
     },
     data(){
         return{
-
+shadowshow:false
         }
     },
     methods:{
@@ -49,6 +57,17 @@ export default {
             this.$router.push({
                 path:'/userlist',
                
+            })
+        },
+        gotosacn(){
+            this.shadowshow = true;
+        },
+        cancel(){
+            this.shadowshow = false;
+        },
+        gotosao(){
+            this.$router.push({
+                path:'/scan'
             })
         }
     }
@@ -109,5 +128,40 @@ background: #e3f1ff;
 .assetprove img{
     width: 50px;
     margin-top: 20px;
+}
+.shadow{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.3);
+}
+.box{
+    position: absolute;
+    top: 50%;
+    
+    left: 50%;
+    width: 80%;
+    margin: auto;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    border-radius: 5px;
+    
+}
+.in{
+    padding: 10px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.san,.cancel{
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #999999;
+}
+.san:active,.cancel:active{
+    background: #e0dfdf;
 }
 </style>

@@ -230,6 +230,7 @@ export default {
                 console.log(JSON.parse(res.data.data))
                 this.errmsg(JSON.parse(res.data.data).error_msg)
             }else{
+                localStorage.setItem('checkface',true)
                this.$router.push({
                     path:'/nomarlLog'
                      ,query :{index:1,current:0}

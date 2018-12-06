@@ -85,7 +85,7 @@ companyInfo,back
                     console.log(res)
                     localStorage.setItem('updatafile',JSON.stringify(res))
                     this.$router.push({
-                        path:'/addsuccess'
+                        path:'/companySuccess'
                     })
                 }).catch(err=>{
                     console.log(err)
@@ -97,7 +97,7 @@ companyInfo,back
                                         localStorage.setItem('updatafile',JSON.stringify(res))
 
                     this.$router.push({
-                        path:'/addsuccess'
+                        path:'/companySuccess'
                     })
                 }).catch(err=>{
                     console.log(err)
@@ -109,7 +109,7 @@ companyInfo,back
                                         localStorage.setItem('updatafile',JSON.stringify(res))
 
                     this.$router.push({
-                        path:'/addsuccess'
+                        path:'/companySuccess'
                     })
                 }).catch(err=>{
                     console.log(err)
