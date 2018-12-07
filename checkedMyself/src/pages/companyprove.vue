@@ -51,10 +51,15 @@
 </template>
 <script>
 import back from '../components/back'
-
+import {queryCompanyInfoByCompanyRole} from'../router/http.js'
 export default {
     components:{
 back
+    },
+    data(){
+        return{
+            roleId:localStorage.getItem('roleId')
+        }
     },
     methods:{
         updataprove(){
@@ -64,6 +69,14 @@ back
                 
             })
         }
+    },
+    mounted(){
+        
+        queryCompanyInfoByCompanyRole(this.roleId,'a').then(res=>{
+            console.log(res)
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 }
 </script>

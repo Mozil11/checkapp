@@ -6,9 +6,9 @@
                     <img src="../assets/prove.svg" alt="">
                 </el-col>
                 <el-col :span="20">
-                    <div class="guanlian">姓    名：王海洋</div>
-                    <div class="num">用户名：wanghaiyang</div>
-                    <div class="num">用户编号：userid_0001</div>
+                    <div class="guanlian">姓    名：{{name}}</div>
+                    <div class="num">用户名：{{username}}</div>
+                    <div class="num">用户编号：{{usernumber}}</div>
 
                 </el-col>
               
@@ -21,9 +21,15 @@ export default {
    
     data(){
         return{
+             name:localStorage.getItem('name'),
+username: localStorage.getItem('username'),
+usernumber:localStorage.getItem('usernumber')
         }
     },
     mounted(){
+ 
+               
+        
     }
 }
 </script>

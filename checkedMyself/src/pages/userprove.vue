@@ -44,16 +44,16 @@
 </template>
 <script>
 import back from '../components/back'
-
+import {getUserById} from '../router/http.js'
 export default {
     components:{
 back
     },
     data(){
         return{
-            name:localStorage.getItem('userprovename'),
-username:localStorage.getItem('userproveusername'),
-usernumber:localStorage.getItem('userproveusernumber')
+            name:'',
+username:'',
+usernumber:''
         }
     },
     methods:{
@@ -64,6 +64,20 @@ usernumber:localStorage.getItem('userproveusernumber')
                 
             })
         }
+    },
+    mounted(){
+        this.name = this.$route.query.a;
+        this.username = this.$route.query.b;
+        this.usernumber = this.$route.query.c;
+        localStorage.setItem('name',this.name)
+                localStorage.setItem('username',this.username)
+        localStorage.setItem('usernumber',this.usernumber)
+
+        getUserById(this.usernumber).then(res=>{
+            console.log(res)
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 }
 </script>

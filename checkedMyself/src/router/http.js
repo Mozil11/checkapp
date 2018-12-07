@@ -145,6 +145,32 @@ function logout(){
     return axios.post('/app/logout',{a:'a'},{headers:{'Authorization':tokenobj}})
 
 }
+//通过企业身份和查询企业列表
+function queryCompanyInfoByCompanyRole(companyRole,platForm){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    var data = new FormData();
+    data.append('companyRole',companyRole)    
+    data.append('platForm',platForm)
+
+    return axios.post('/companyInformation/queryCompanyInfoByCompanyRole',data,{headers:{'Authorization':tokenobj}})
+}
+//获取用户列表
+function getCompanyUserList(){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    return axios.post('/companyUser/getCompanyUserList',{a:'a'},{headers:{'Authorization':tokenobj}})
+
+}
+//根据id获取用户信息
+function getUserById (userId){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    var data = new FormData();
+    data.append('userId',userId)    
+    return axios.post('/companyUser/getUserById',data,{headers:{'Authorization':tokenobj}})
+}
+
 export {
     sendmsgCode,
     loginbycode,
@@ -160,5 +186,9 @@ export {
     updataMaterial,
     unOcrUpdate,
     xfOcrInvoice,
-    uploadRecognition
+    uploadRecognition,
+    queryCompanyInfoByCompanyRole,
+    getCompanyUserList,
+    getUserById,
+    
 }

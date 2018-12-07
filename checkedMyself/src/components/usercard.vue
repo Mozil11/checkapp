@@ -5,9 +5,9 @@
                 <img src="../assets/u19685.png" alt="" class="logo">
             </el-col>
             <el-col :span="20" >
-                <div class="rol">姓名：{{name}}</div>
-                <div class="rol">用户名：{{username}}</div>
-                <div class="rol">用户编号：{{usernumber}}</div>
+                <div class="rol">姓名：{{fullName}}</div>
+                <div class="rol">用户名：{{userName}}</div>
+                <div class="rol">用户编号：{{userId}}</div>
             </el-col>
         </el-row>
        
@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-    props:['name','username','usernumber'],
+    props:['fullName','userName','userId'],
     data(){
         return{
 
@@ -23,16 +23,15 @@ export default {
     },
     methods:{
         gotoProveDetails(){
+
             this.$router.push({
-                path:'/userprove'
+                path:'/userprove',
+                query:{a:this.fullName,b:this.userName,c:this.userId}
             })
         }
     },
     mounted(){
-       
-localStorage.setItem('userprovename',this.name)
-localStorage.setItem('userproveusername',this.username)
-localStorage.setItem('userproveusernumber',this.usernumber)
+
 
 
     }

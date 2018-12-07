@@ -5,7 +5,7 @@
         <div v-if="list.length==0" style="padding-top:80px;">暂无用户</div>
         <div v-else>
             <div v-for="(v,i) in list" :key="i">
-                <card :name='v.name' :username='v.username' :usernumber='v.usernumber'/>
+                <card :fullName='v.fullName' :userName='v.userName' :userId='v.userId'/>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
 import back from '../components/back'
 
 import card from '../components/usercard'
-// import {inquireReceivableList}from '../router/http.js'
+import {getCompanyUserList}from '../router/http.js'
 export default {
     components:{
         card,back
@@ -22,9 +22,9 @@ export default {
     data(){
         return {
             list:[{
-                name:'aaa',
-                username:'aaa',
-                usernumber:'1'
+                fullName:'aaa',
+                userName:'aaa',
+                userId:'1'
             }]
         }
     },
@@ -40,6 +40,12 @@ export default {
     },
     mounted(){
         // this.getInquireReceivableList()
+        getCompanyUserList().then(res=>{
+            console.log(res)
+            this.list = res.data.rows
+        }).catch(err=>{
+            console.log(err)
+        })
     }
 }
 </script>

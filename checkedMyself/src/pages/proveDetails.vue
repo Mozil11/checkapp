@@ -28,12 +28,12 @@ files,proveNumber
     },
     data(){
         return{
-            receivableId: localStorage.getItem('receivableId'),
-            approveStatus: localStorage.getItem('approveStatus'),
-            receivableRemain: localStorage.getItem('receivableRemain'), 
-            receivableEndTime: localStorage.getItem('receivableEndTime'),
-        supplierName:localStorage.getItem('supplierName'),
-            coreCompanyName:localStorage.getItem('coreCompanyName'),
+            receivableId: '',
+            approveStatus: '',
+            receivableRemain: '', 
+            receivableEndTime: '',
+        supplierName:'',
+            coreCompanyName:'',
             list:[]
 
 
@@ -53,6 +53,8 @@ files,proveNumber
         // localStorage.getItem('receivableEndTime')
         // localStorage.getItem('supplierName')
         // localStorage.getItem('coreCompanyName')
+        this.receivableId = this.$route.query.receivableId
+        localStorage.setItem('receivableId',this.receivableId)
         inquireReceivableByReceivableId(this.receivableId).then(res=>{
             console.log(res)
             this.list = res.data.list

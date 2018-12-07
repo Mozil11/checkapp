@@ -18,17 +18,13 @@ export default {
     methods:{
         gotoProveDetails(){
             this.$router.push({
-                path:'/proveDetails'
+                path:'/proveDetails',
+                query:{receivableId:this.receivableId,approveStatus:this.approveStatus,receivableRemain:this.receivableRemain,receivableEndTime:this.receivableEndTime,supplierName:this.supplierName,coreCompanyName:this.coreCompanyName}
             })
         }
     },
     mounted(){
-        localStorage.setItem('receivableId',this.receivableId)
-        localStorage.setItem('approveStatus',this.approveStatus)
-        localStorage.setItem('receivableRemain',this.receivableRemain)
-        localStorage.setItem('receivableEndTime',this.receivableEndTime)
-        localStorage.setItem('supplierName',this.supplierName)
-        localStorage.setItem('coreCompanyName',this.coreCompanyName)
+       
 
 
     }
