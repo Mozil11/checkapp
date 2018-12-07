@@ -19,40 +19,52 @@ function loginbycode(number,code){
 //扫码
 function scanCode(qrToken){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('qrToken',qrToken)
-    return axios.post('/app/qrScan',data,{headers:{'Authorization':token}})
+    return axios.post('/app/qrScan',data,{headers:{'Authorization':tokenobj}})
 
 
 }
 //确认登陆
 function makesureQrlogin(qrToken){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('qrToken',qrToken)
-    return axios.post('/app/qrlogin',data,{headers:{'Authorization':token}})
+    return axios.post('/app/qrlogin',data,{headers:{'Authorization':tokenobj}})
 }
 //创建区块链账户（组织用户）
 function createLinkUser(){
     var token =localStorage.getItem('token')
-    return axios.post('/app/createChainUser',{a:'a'},{headers:{'Authorization':token}})
+    var tokenobj = JSON.parse(token).data
+
+    return axios.post('/app/createChainUser',{a:'a'},{headers:{'Authorization':tokenobj}})
 }
 //	资产列表
 function inquireReceivableList(){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     console.log(token)
-    return axios.post('/allReceivableInformation/inquireReceivableList',{offset:0,limit:10},{headers:{'Authorization':token}})
+    return axios.post('/allReceivableInformation/inquireReceivableList',{offset:0,limit:10},{headers:{'Authorization':tokenobj}})
 }
 //	资产详情
 function inquireReceivableByReceivableId(receivableId){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('receivableId',receivableId)
-    return axios.post('/allReceivableInformation/inquireReceivableByReceivableId',data,{headers:{'Authorization':token}})
+    return axios.post('/allReceivableInformation/inquireReceivableByReceivableId',data,{headers:{'Authorization':tokenobj}})
 }
 //凭证材料信息的修改
 function updataMaterial(fileslist){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('fileId',fileslist.fileId)
     data.append('fileName',fileslist.fileName)
@@ -60,12 +72,14 @@ function updataMaterial(fileslist){
     data.append('createTime',fileslist.createTime)
     data.append('fileVersion',fileslist.fileVersion)
     data.append('fileState',fileslist.fileState)
-    return axios.post('/allReceivableInformation/updataMaterial',data,{headers:{'Authorization':token}})
+    return axios.post('/allReceivableInformation/updataMaterial',data,{headers:{'Authorization':tokenobj}})
 
 }
 //凭证材料非ocr上传
 function unOcrUpdate(file,start,sign,receivableId,fileName,remarks){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('file',file)
     data.append('start',start)
@@ -73,17 +87,19 @@ function unOcrUpdate(file,start,sign,receivableId,fileName,remarks){
     data.append('receivableId',receivableId)
     data.append('fileName',fileName)
     data.append('remarks',remarks)
-    return axios.post('/AppFileUpload/fileUpload',data,{headers:{'Authorization':token}})
+    return axios.post('/AppFileUpload/fileUpload',data,{headers:{'Authorization':tokenobj}})
 }
 //ocr上传
 function uploadRecognition (file,receivableId){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('file',file)
     data.append('start',0)
     data.append('sign',1)
     data.append('receivableId',receivableId)
-    return axios.post('/allReceivableInformation/uploadRecognition',data,{headers:{'Authorization':token}})
+    return axios.post('/allReceivableInformation/uploadRecognition',data,{headers:{'Authorization':tokenobj}})
 
 
 }
@@ -91,33 +107,42 @@ function uploadRecognition (file,receivableId){
 
 function faceCheck(data){
     var token = localStorage.getItem('token')
-    return axios.post('/app/baiduAIFaceMatch',data,{headers:{'Authorization':token}})
+    var tokenobj = JSON.parse(token).data
+
+    return axios.post('/app/baiduAIFaceMatch',data,{headers:{'Authorization':tokenobj}})
 }
 //增值税发票识别
 function xfOcrInvoice(image){
     
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('image',image)
-    return axios.post('/app/xfOcrInvoice',data,{headers:{'Authorization':token}})
+    return axios.post('/app/xfOcrInvoice',data,{headers:{'Authorization':tokenobj}})
 
 }
 //选择一个角色
 function chooseRole(roleId){
     var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+
     var data = new FormData();
     data.append('roleId',roleId)
-    return axios.post('/setRoleId',data,{headers:{'Authorization':token}})
+    return axios.post('/setRoleId',data,{headers:{'Authorization':tokenobj}})
 }
 //获取baidu access_token
 function getbaidutoken(){
     var token = localStorage.getItem('token')
-    return axios.post('/app/baiduAIToken',{a:'a'},{headers:{'Authorization':token}})
+    var tokenobj = JSON.parse(token).data
+    return axios.post('/app/baiduAIToken',{a:'a'},{headers:{'Authorization':tokenobj}})
 }
 //退出
 function logout(){
     var token = localStorage.getItem('token')
-    return axios.post('/app/logout',{a:'a'},{headers:{'Authorization':token}})
+    var tokenobj = JSON.parse(token).data
+
+    return axios.post('/app/logout',{a:'a'},{headers:{'Authorization':tokenobj}})
 
 }
 export {

@@ -46,7 +46,7 @@
 <script>
 import {sendmsgCode,loginbycode,chooseRole} from '../router/http.js'
 import tips from '../components/tips'
-// import bus from '../router/bus.js'
+import {set,get} from '../router/dataSave.js'
 // import store from '../router/dataSave.js'
 export default {
   components:{
@@ -95,7 +95,7 @@ export default {
         loginbycode(this.value,this.code).then(res=>{
           console.log(res)
           if(res.data.code==200){
-              localStorage.setItem('token',res.data.data.token)
+              set('token',res.data.data.token)
               localStorage.setItem('data',JSON.stringify(res.data.data))
               this.role = res.data.data.roleList
               this.winShow = true;
@@ -174,11 +174,20 @@ export default {
     }
   },
   mounted(){
+    console.log(get('token'))
+    if(get('token')==false){
+      localStorage.clear();
+      this.$router.push({
+                path:'/',
+                // query:{index:1}
+            })
+    }
     // console.log(JSON.parse(localStorage.getItem('data')))
     if(localStorage.getItem('data')!=null){
       var flag = JSON.parse(localStorage.getItem('data')).flag
     }
-    if(localStorage.getItem('token')){
+    
+    if(get('token')){
       if(localStorage.getItem('checkface')){
         if(flag==true){
            this.$router.push({path: '/firstlogin'});

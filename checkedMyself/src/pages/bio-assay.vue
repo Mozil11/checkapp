@@ -228,16 +228,27 @@ export default {
             wt.close()
             if(res.data.code!=200){
                 console.log(JSON.parse(res.data.data))
-                this.errmsg(JSON.parse(res.data.data).error_msg)
+                this.errmsg('人脸对比失败')
+                
             }else{
-                localStorage.setItem('checkface',true)
-               this.$router.push({
-                    path:'/nomarlLog'
-                     ,query :{index:1,current:0}
-                })
+                if(JSON.parse(res.data.data).error_code!=0){
+                    this.errmsg('人脸对比失败')
+                }else{
+                    if(JSON.parse(res.data.data).result.score>80){
+
+                        localStorage.setItem('checkface',true)
+                       this.$router.push({
+                            path:'/nomarlLog'
+                             ,query :{index:1,current:0}
+                        })
+                    }else{
+                         this.errmsg('人脸对比失败')
+                    }
+                }
             }
        }).catch(err=>{
            console.log(err)
+           alert('系统错误')
             wt.close()
        })
         // axios({

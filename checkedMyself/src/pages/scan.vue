@@ -75,6 +75,8 @@ export default {
            var qrdata = eval('(' + result + ')'); 
            console.log(qrdata)
            var myreceivableId = localStorage.getItem('receivableId')
+           localStorage.setItem('platform',qrdata.platform)
+           localStorage.setItem('qrToken',qrdata.qrToken)
         //    if(qrdata.receivableId != myreceivableId){
             
 
@@ -82,27 +84,27 @@ export default {
 
         //    }
         if(qrdata.certificate_name==0){
+             this.scan.close();
             this.$router.push({
                     path:'/companyprove'
                 })
         }else if(qrdata.certificate_name==1){
+             this.scan.close();
             this.$router.push({
                     path:'/userlist'
                 })
         }else if(qrdata.certificate_name==2){
+             this.scan.close();
             this.$router.push({
                     path:'/proveIn'
                 })
         }else if(qrdata.certificate_name==3){
+             this.scan.close();
                 this.$router.push({
                     path:'/creditExtension'
                 })
         }else{
-            
-        }
-           localStorage.setItem('platform',qrdata.platform)
-           localStorage.setItem('qrToken',qrdata.qrToken)
-            scanCode(qrdata.qrToken).then(res=>{
+             scanCode(qrdata.qrToken).then(res=>{
                 console.log(res)
                  this.scan.close();
                 this.$router.push({
@@ -113,6 +115,9 @@ export default {
                 console.log(err)
                 
             })
+        }
+           
+           
            
            
         },
