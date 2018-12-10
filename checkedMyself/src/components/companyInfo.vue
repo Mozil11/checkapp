@@ -3,11 +3,12 @@
             <div class="card">
             <el-row class="aaa">
                 <el-col :span="4" class="first">
-                    <img src="../assets/prove.svg" alt="">
+                    <img src="../assets/prove.svg" alt="" v-if="logoPath">
+                    <img :src="logoPath" alt="" v-else>
                 </el-col>
                 <el-col :span="20">
-                    <div class="guanlian">企业名称：海尔集团公司</div>
-                    <div class="num">企业编号：cm_0001</div>
+                    <div class="guanlian">企业名称：{{companyName}}</div>
+                    <div class="num">企业编号：{{companyId}}</div>
                 </el-col>
               
             </el-row>
@@ -16,7 +17,7 @@
 </template>
 <script>
 export default {
-   
+   props:['companyId','companyName','logoPath'],
     data(){
         return{
         }

@@ -2,7 +2,7 @@
     <div class='outside'>
         <div class="head"><back/>企业凭证</div>
         <div>
-            <companyInfo />
+            <companyInfo :companyId='companyId' :companyName='companyName' :logoPath='logoPath'/>
             <div class="todo" v-if="todoshow">
                 <div>
                     <span>上传凭证类型：</span>
@@ -41,7 +41,7 @@
 <script>
 import companyInfo from '../components/companyInfo';
 import back from '../components/back'
-import {unOcrUpdate,xfOcrInvoice} from '../router/http.js'
+import {uploadMaterial} from '../router/http.js'
 
 export default {
     components:{
@@ -49,19 +49,10 @@ companyInfo,back
     },
     data(){
         return{
-            options: [{
-          value: 0,
-          label: '发票'
-        }, {
-          value: 1,
-          label: '贸易合同'
-        }, {
-          value: 2,
-          label: '发货单'
-        }, {
-          value: 3,
-          label: '其他'
-        }],
+
+            companyId:localStorage.getItem('companyId'),
+            companyName:localStorage.getItem('companyName'),
+            logoPath:localStorage.getItem('logoPath'),
         value: '',
          receivableId: localStorage.getItem('receivableId'),
          files:{'a':'a'},
@@ -79,38 +70,28 @@ companyInfo,back
             this.todoshow = true;
         },
         gotosuccess(){
-            if(this.value==2){
+            if(this.runprove=='营业执照扫描件'){
 
-                unOcrUpdate(this.files,this.value,this.sign2,this.receivableId,this.filename,this.marks).then(res=>{
+                uploadMaterial('0',this.companyId,this.files).then(res=>{
                     console.log(res)
-                    localStorage.setItem('updatafile',JSON.stringify(res))
-                    this.$router.push({
-                        path:'/companySuccess'
-                    })
                 }).catch(err=>{
                     console.log(err)
                 })
-                this.sign2++
-            }else if(this.value==3){
-                unOcrUpdate(this.files,this.value,this.sign3,this.receivableId,this.filename,this.marks).then(res=>{
+            }else if(this.runprove=='企业法人证件国徽面（正面）扫描件'){
+                uploadMaterial('1',this.companyId,this.files).then(res=>{
                     console.log(res)
-                                        localStorage.setItem('updatafile',JSON.stringify(res))
-
-                    this.$router.push({
-                        path:'/companySuccess'
-                    })
                 }).catch(err=>{
                     console.log(err)
                 })
-                this.sign3++
-            }else{
-                unOcrUpdate(this.files,this.value,1,this.receivableId,this.filename,this.marks).then(res=>{
+            }else if(this.runprove == '企业法人证件人像面（反面）扫描件'){
+                uploadMaterial('2',this.companyId,this.files).then(res=>{
                     console.log(res)
-                                        localStorage.setItem('updatafile',JSON.stringify(res))
-
-                    this.$router.push({
-                        path:'/companySuccess'
-                    })
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }else if(this.runprove == '企业LOGO图片'){
+                uploadMaterial('3',this.companyId,this.files).then(res=>{
+                    console.log(res)
                 }).catch(err=>{
                     console.log(err)
                 })

@@ -4,43 +4,49 @@
             <back />企业凭证
         </div>
         <div class="asset">
-            <img src="../assets/u19685.png" alt="" class="logo">
+            <img src="../assets/u19685.png" alt="" class="logo" v-if="logoPath==null">
+            <img :src="logoPath" alt="" class="logo" v-else>
             <div class="write">
-                <div>企业名称：海尔集团公司</div>
-                <div>企业编号：cm_0001</div>
-                <div>状态：待补全资料</div>
+                <div>企业名称：{{companyName}}</div>
+                <div>企业编号：{{companyId}}</div>
+                <div>状态：{{authState}}</div>
             </div>
         </div>
         <div class="main">
-            <div class="title">*  </div>
+            <div class="title">*  营业执照扫描件</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="businessLicense==null">
+                <img :src="businessLicense" alt="" style="height:100%; float: left;" v-else>
 
-                <el-button type="primary" class="over" @click="updataprove">重新上传</el-button>
+
+                <el-button type="primary" class="over" @click="updataprove('营业执照扫描件')">{{businessLicense==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="main">
             <div class="title">*  企业法人证件国徽面（正面）扫描件</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="ownerCardFront==null">
+                <img :src="ownerCardFront" alt="" style="height:100%; float: left;" v-else>
 
-                <el-button type="primary" class="over">重新上传</el-button>
+                <el-button type="primary" class="over" @click="updataprove('企业法人证件国徽面（正面）扫描件')">{{ownerCardFront==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="main">
             <div class="title">*  企业法人证件人像面（反面）扫描件</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="ownerCardBack==null">
+                <img :src="ownerCardBack" alt="" style="height:100%; float: left;" v-else>
 
-                <el-button type="primary" class="over">上传凭证</el-button>
+                <el-button type="primary" class="over" @click="updataprove('企业法人证件人像面（反面）扫描件')">{{ownerCardBack==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="main">
             <div class="title">企业LOGO图片</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="logoPath==null">
+                <img :src="logoPath" alt="" style="height:100%; float: left;" v-else>
 
-                <el-button type="primary" class="over">重新上传</el-button>
+                <el-button type="primary" class="over" @click="updataprove('企业LOGO图片')">{{logoPath==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="footer">
@@ -51,19 +57,26 @@
 </template>
 <script>
 import back from '../components/back'
-import {queryCompanyInfoByCompanyRole} from'../router/http.js'
+import {queryCompanyByUserId} from'../router/http.js'
 export default {
     components:{
 back
     },
     data(){
         return{
-            roleId:localStorage.getItem('roleId')
+            userId:JSON.parse(localStorage.getItem('data')).userId,
+            companyId:'',
+            companyName:'',
+            authState:'',
+            logoPath:null,
+            businessLicense:null,
+            ownerCardFront:null,
+            ownerCardBack:null
         }
     },
     methods:{
-        updataprove(){
-            localStorage.setItem('runprove','营业执照扫描件')
+        updataprove(a){
+            localStorage.setItem('runprove',a)
             this.$router.push({
                 path:'/companyadd',
                 
@@ -71,12 +84,24 @@ back
         }
     },
     mounted(){
-        
-        queryCompanyInfoByCompanyRole(this.roleId,'a').then(res=>{
+        queryCompanyByUserId(this.userId).then(res=>{
             console.log(res)
+            this.companyId = res.data.companyId
+            localStorage.setItem('companyId',this.companyId)
+            this.companyName = res.data.companyName
+            localStorage.setItem('companyName',this.companyName)
+
+            this.authState = res.data.authState
+            this.logoPath = res.data.logoPath
+            localStorage.setItem('logoPath',this.logoPath)
+
+            this.businessLicense = res.data.businessLicense
+            this.ownerCardFront = res.data.ownerCardFront
+            this.ownerCardBack = res.data.ownerCardBack
         }).catch(err=>{
             console.log(err)
         })
+        
     }
 }
 </script>

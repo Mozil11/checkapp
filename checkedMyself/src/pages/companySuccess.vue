@@ -11,9 +11,9 @@
             <img :src="data.certificateFile.path" alt="">
         </div>
         <div class="text">
-            <div class="one">企业名称：海尔集团公司</div>
-            <div class="one"><span>凭证编号:</span><span>{{data.certificateFile.certificateId}}</span></div>
-            <div class="one"><span>企业编号：cm_0001</span></div>
+            <div class="one">企业名称：{{companyName}}</div>
+            <div class="one"><span>凭证编号：</span><span>{{data.certificateFile.certificateId}}</span></div>
+            <div class="one"><span>企业编号：{{companyId}}</span></div>
             <div class="one"><span>凭证类型：</span><span>{{type}}</span></div>
 
         </div>
@@ -29,7 +29,9 @@ export default {
     data(){
         return{
             data:JSON.parse(localStorage.getItem('updatafile')),
-            type:localStorage.getItem('runprove')
+            type:localStorage.getItem('runprove'),
+             companyId:localStorage.getItem('companyId'),
+            companyName:localStorage.getItem('companyName'),
         }
     }
 }

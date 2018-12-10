@@ -154,7 +154,7 @@ export default {
     },
     choose(a){
       console.log(a)
-      localStorage.setItem('roleId',a.roleId)
+      
       chooseRole(a.roleId).then(res=>{
         console.log(res)
         this.winShow = false

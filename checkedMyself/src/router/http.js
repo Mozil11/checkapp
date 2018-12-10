@@ -145,16 +145,7 @@ function logout(){
     return axios.post('/app/logout',{a:'a'},{headers:{'Authorization':tokenobj}})
 
 }
-//通过企业身份和查询企业列表
-function queryCompanyInfoByCompanyRole(companyRole,platForm){
-    var token = localStorage.getItem('token')
-    var tokenobj = JSON.parse(token).data
-    var data = new FormData();
-    data.append('companyRole',companyRole)    
-    data.append('platForm',platForm)
 
-    return axios.post('/companyInformation/queryCompanyInfoByCompanyRole',data,{headers:{'Authorization':tokenobj}})
-}
 //获取用户列表
 function getCompanyUserList(){
     var token = localStorage.getItem('token')
@@ -170,7 +161,39 @@ function getUserById (userId){
     data.append('userId',userId)    
     return axios.post('/companyUser/getUserById',data,{headers:{'Authorization':tokenobj}})
 }
+//企业凭证上传接口
+function uploadMaterial(start,companyId,file){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    var data = new FormData();
+    data.append('file',file)
+    data.append('start',start)
+    data.append('companyId',companyId)
+    return axios.post('/companyInformation/uploadMaterial',data,{headers:{'Authorization':tokenobj}})
 
+
+}
+//企业用户凭证材料上传
+function uploadInfo(file,companyId,userId,companyUserType){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    var data = new FormData();
+    data.append('file',file)
+    data.append('companyId',companyId)
+    data.append('userId',userId)
+    data.append('companyUserType',companyUserType)
+    return axios.post('/trialUserInfo/saveTrialUserInfo',data,{headers:{'Authorization':tokenobj}})
+
+}
+//通过用户编号查询企业信息
+function queryCompanyByUserId(userId){
+    var token = localStorage.getItem('token')
+    var tokenobj = JSON.parse(token).data
+    var data = new FormData();
+    data.append('userId',userId)
+    return axios.post('/companyInformation/queryCompanyByUserId',data,{headers:{'Authorization':tokenobj}})
+
+}
 export {
     sendmsgCode,
     loginbycode,
@@ -187,8 +210,10 @@ export {
     unOcrUpdate,
     xfOcrInvoice,
     uploadRecognition,
-    queryCompanyInfoByCompanyRole,
     getCompanyUserList,
     getUserById,
+    uploadMaterial,
+    uploadInfo,
+    queryCompanyByUserId
     
 }
