@@ -41,7 +41,7 @@
 <script>
 import userInfo from '../components/userInfo';
 import back from '../components/back'
-import {unOcrUpdate,xfOcrInvoice} from '../router/http.js'
+import {uploadInfo} from '../router/http.js'
 
 export default {
     components:{
@@ -71,7 +71,9 @@ userInfo,back
          marks:'',
          sign2:1,
          sign3:1,
-         userprove: localStorage.getItem('userprove')
+         userprove: localStorage.getItem('userprove'),
+         companyId:localStorage.getItem('companyId'),
+         userId:localStorage.getItem('usernumber')
         }
     },
     methods:{
@@ -79,38 +81,22 @@ userInfo,back
             this.todoshow = true;
         },
         gotosuccess(){
-            if(this.value==2){
+            if(this.userprove=='身份证人像面扫描件'){
 
-                unOcrUpdate(this.files,this.value,this.sign2,this.receivableId,this.filename,this.marks).then(res=>{
+                uploadInfo(this.files,this.companyId,this.userId,'0').then(res=>{
                     console.log(res)
-                    localStorage.setItem('updatafile',JSON.stringify(res))
-                    this.$router.push({
-                        path:'/userproveSuccess'
-                    })
                 }).catch(err=>{
                     console.log(err)
                 })
-                this.sign2++
-            }else if(this.value==3){
-                unOcrUpdate(this.files,this.value,this.sign3,this.receivableId,this.filename,this.marks).then(res=>{
+            }else if(this.userprove == '身份证国徽面扫描件'){
+                uploadInfo(this.files,this.companyId,this.userId,'1').then(res=>{
                     console.log(res)
-                                        localStorage.setItem('updatafile',JSON.stringify(res))
-
-                    this.$router.push({
-                        path:'/userproveSuccess'
-                    })
                 }).catch(err=>{
                     console.log(err)
                 })
-                this.sign3++
             }else{
-                unOcrUpdate(this.files,this.value,1,this.receivableId,this.filename,this.marks).then(res=>{
+                uploadInfo(this.files,this.companyId,this.userId,'2').then(res=>{
                     console.log(res)
-                                        localStorage.setItem('updatafile',JSON.stringify(res))
-
-                    this.$router.push({
-                        path:'/userproveSuccess'
-                    })
                 }).catch(err=>{
                     console.log(err)
                 })

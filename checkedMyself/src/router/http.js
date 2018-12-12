@@ -154,12 +154,12 @@ function getCompanyUserList(){
 
 }
 //根据id获取用户信息
-function getUserById (userId){
+function getUserByUserName (userName){
     var token = localStorage.getItem('token')
     var tokenobj = JSON.parse(token).data
     var data = new FormData();
-    data.append('userId',userId)    
-    return axios.post('/companyUser/getUserById',data,{headers:{'Authorization':tokenobj}})
+    data.append('id',userName)    
+    return axios.post('/companyUser/getUserByUserName',data,{headers:{'Authorization':tokenobj}})
 }
 //企业凭证上传接口
 function uploadMaterial(start,companyId,file){
@@ -211,7 +211,7 @@ export {
     xfOcrInvoice,
     uploadRecognition,
     getCompanyUserList,
-    getUserById,
+    getUserByUserName,
     uploadMaterial,
     uploadInfo,
     queryCompanyByUserId

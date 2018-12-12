@@ -2,7 +2,8 @@
     <div class='provecard' @click="gotoProveDetails">
         <el-row>
             <el-col :span="4" >
-                <img src="../assets/u19685.png" alt="" class="logo">
+                <img src="../assets/u19685.png" alt="" class="logo" v-if="logoPath==null">
+                <img :src="logoPath" alt="" class="logo" v-else>
             </el-col>
             <el-col :span="20" >
                 <div class="rol">姓名：{{fullName}}</div>
@@ -15,7 +16,7 @@
 </template>
 <script>
 export default {
-    props:['fullName','userName','userId'],
+    props:['fullName','userName','userId','logoPath'],
     data(){
         return{
 

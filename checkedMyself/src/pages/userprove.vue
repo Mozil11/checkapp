@@ -4,7 +4,8 @@
             <back />用户凭证
         </div>
         <div class="asset">
-            <img src="../assets/u19685.png" alt="" class="logo">
+            <img src="../assets/u19685.png" alt="" class="logo" v-if="logoPath==null">
+                <img :src="logoPath" alt="" class="logo" v-else>
             <div class="write">
                 <div>姓    名：{{name}}</div>
                 <div>用户名：{{username}}</div>
@@ -14,25 +15,26 @@
         <div class="main">
             <div class="title">* 身份证人像面扫描件 </div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="cardFront==null">
+                <img :src="cardFront" alt="" v-else>
 
-                <el-button type="primary" class="over" @click="updataprove">重新上传</el-button>
+                <el-button type="primary" class="over" @click="updataprove('身份证人像面扫描件')">{{cardFront==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="main">
             <div class="title">*  身份证国徽面扫描件</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
-
-                <el-button type="primary" class="over">重新上传</el-button>
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="cardBack==null">
+                <img :src="cardBack" alt="" v-else>
+                <el-button type="primary" class="over" @click="updataprove('身份证国徽面扫描件')">{{cardBack==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         <div class="main">
             <div class="title">*  近期免冠照片</div>
             <div class="pic">
-                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;">
-
-                <el-button type="primary" class="over">上传凭证</el-button>
+                <img src="../assets/u19685.png" alt="" style="height:100%; float: left;" v-if="userImage">
+                <img :src="userImage" alt="" v-else>
+                <el-button type="primary" class="over" @click="updataprove('近期免冠照片')">{{userImage==null?'上传凭证':'重新上传'}}</el-button>
             </div>
         </div>
         
@@ -44,7 +46,7 @@
 </template>
 <script>
 import back from '../components/back'
-import {getUserById} from '../router/http.js'
+import {getUserByUserName,queryCompanyByUserId} from '../router/http.js'
 export default {
     components:{
 back
@@ -53,12 +55,18 @@ back
         return{
             name:'',
 username:'',
-usernumber:''
+usernumber:'',
+cardFront:null,
+cardBack:null,
+userImage:null,
+ userId:JSON.parse(localStorage.getItem('data')).userId,
+  logoPath:null
+
         }
     },
     methods:{
-        updataprove(){
-            localStorage.setItem('userprove','身份证人像面扫描件')
+        updataprove(a){
+            localStorage.setItem('userprove',a)
             this.$router.push({
                 path:'/userproveadd',
                 
@@ -70,11 +78,14 @@ usernumber:''
         this.username = this.$route.query.b;
         this.usernumber = this.$route.query.c;
         localStorage.setItem('name',this.name)
-                localStorage.setItem('username',this.username)
+        localStorage.setItem('username',this.username)
         localStorage.setItem('usernumber',this.usernumber)
-
-        getUserById(this.usernumber).then(res=>{
+        this.logoPath = localStorage.getItem('logoPath')
+        getUserByUserName(this.username).then(res=>{
             console.log(res)
+            this.cardFront = res.data.cardFront
+            this.cardBack = res.data.cardFront
+            this,userImage = res.data.userImage
         }).catch(err=>{
             console.log(err)
         })

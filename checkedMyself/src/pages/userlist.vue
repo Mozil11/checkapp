@@ -5,7 +5,7 @@
         <div v-if="list.length==0" style="padding-top:80px;">暂无用户</div>
         <div v-else>
             <div v-for="(v,i) in list" :key="i">
-                <card :fullName='v.fullName' :userName='v.userName' :userId='v.userId'/>
+                <card :fullName='v.fullName' :userName='v.userName' :userId='v.userId' :logoPath='logoPath'/>
             </div>
         </div>
     </div>
@@ -14,7 +14,7 @@
 import back from '../components/back'
 
 import card from '../components/usercard'
-import {getCompanyUserList}from '../router/http.js'
+import {getCompanyUserList,queryCompanyByUserId}from '../router/http.js'
 export default {
     components:{
         card,back
@@ -24,8 +24,9 @@ export default {
             list:[{
                 fullName:'aaa',
                 userName:'aaa',
-                userId:'1'
-            }]
+ userId:JSON.parse(localStorage.getItem('data')).userId,
+            }],
+ logoPath:null
         }
     },
     methods:{
@@ -40,8 +41,17 @@ export default {
     },
     mounted(){
         // this.getInquireReceivableList()
+        queryCompanyByUserId(this.userId).then(res=>{
+           
+                        localStorage.setItem('logoPath',res.data.logoPath)
+                        localStorage.setItem('companyId',res.data.companyId)
+
+        }).catch(err=>{
+            console.log(err)
+        })
         getCompanyUserList().then(res=>{
             console.log(res)
+             this.logoPath = localStorage.getItem('logoPath')
             this.list = res.data.rows
         }).catch(err=>{
             console.log(err)

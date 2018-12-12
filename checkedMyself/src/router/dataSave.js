@@ -17,7 +17,13 @@ function get(key){
       return dataObjDatatoJson;
   }
 }
-
+//解密
+function decode(a){
+  var val = decodeURIComponent(a)
+  var val1 = val.split('{')[1]
+  var val2 = val1.split('}')[0]
+  return val2
+}
 export {
   set,get
 }
